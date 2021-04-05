@@ -22,12 +22,11 @@ public class APIController {
 
     @CrossOrigin
     @PostMapping("/api/users")
-    public ResponseEntity<UserModel> addUserModel(@RequestParam String id, @RequestParam String firstName, @RequestParam String lastName , @RequestParam String emailAddress) {
+    public ResponseEntity<UserModel> addUserModel(@RequestParam String firstName, @RequestParam String lastName , @RequestParam String emailAddress) {
 
-        System.out.println(id);
+        System.out.println(firstName);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users")
-                .queryParam("id", id)
                 .queryParam("firstName", firstName)
                 .queryParam("lastName",lastName)
                 .queryParam("emailAddress",emailAddress);
