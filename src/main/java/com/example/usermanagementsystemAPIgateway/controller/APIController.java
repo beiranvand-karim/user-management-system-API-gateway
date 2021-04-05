@@ -7,8 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,30 +20,33 @@ public class APIController {
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<?> entity = new HttpEntity<>(headers);
 
-    @GetMapping("/adduser")
-    public ResponseEntity<UserModel> addUserModel() {
+    @CrossOrigin
+    @PostMapping("/api/users")
+    public ResponseEntity<UserModel> addUserModel(@RequestParam String id, @RequestParam String firstName, @RequestParam String lastName , @RequestParam String emailAddress) {
 
+        System.out.println(id);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users")
-                .queryParam("id", "1")
-                .queryParam("name", "ali")
-                .queryParam("emailAddress", "hello@gmail.com");
+                .queryParam("id", id)
+                .queryParam("firstName", firstName)
+                .queryParam("lastName",lastName)
+                .queryParam("emailAddress",emailAddress);
 
-
-        ResponseEntity<UserModel> userModel = restTemplate.exchange(
+        ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
                 builder.build().encode().toUri(),
                 HttpMethod.POST,
                 entity,
                 UserModel.class
                 );
-        return userModel;
+        return responseEntity;
     }
 
-    @GetMapping("/getuser")
-    public ResponseEntity<UserModel> getUser() {
+    @CrossOrigin
+    @GetMapping("/api/user")
+    public ResponseEntity<UserModel> getUser(@RequestParam String id) {
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/user")
-                .queryParam("id", "1");
+                .queryParam("id", id);
 
 
         ResponseEntity<UserModel> userModel = restTemplate.exchange(
@@ -56,7 +58,8 @@ public class APIController {
         return userModel;
     }
 
-    @GetMapping("/getusers")
+    @CrossOrigin
+    @GetMapping("/api/users")
     public ResponseEntity<String> getUsers() {
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users");
@@ -70,11 +73,12 @@ public class APIController {
         return userModel;
     }
 
-    @GetMapping("/deleteuser")
-    public ResponseEntity<String> deleteUser() {
+    @CrossOrigin
+    @DeleteMapping("/api/users")
+    public ResponseEntity<String> deleteUser(@RequestParam String id) {
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users")
-                .queryParam("id","1");
+                .queryParam("id",id);
 
         ResponseEntity<String> userModel = restTemplate.exchange(
                 builder.build().encode().toUri(),

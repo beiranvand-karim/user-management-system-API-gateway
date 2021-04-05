@@ -3,16 +3,18 @@ package com.example.usermanagementsystemAPIgateway.model;
 public class UserModel {
 
     private String id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String dataCreated;
     private String emailAddress;
 
     public UserModel() {
     }
 
-    public UserModel(String id, String name, String dataCreated, String emailAddress) {
+    public UserModel(String id, String firstName, String lastName, String dataCreated, String emailAddress) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.dataCreated = dataCreated;
         this.emailAddress = emailAddress;
     }
@@ -25,12 +27,20 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getDataCreated() {
