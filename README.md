@@ -15,8 +15,8 @@ ___
  
  To get a user by id :
  
- `curl -X GET -G http://localhost:8082/api/user -d 'id'='1'`
+ `curl -X GET -G http://localhost:8082/api/user -d 'id'='1' `
  
  To delete a user by id:
  
- `curl -X DELETE -G http://localhost:8082/api/users -d 'id'='1'`
+ `curl -X DELETE -G http://localhost:8082/api/users -d 'id'='1' `

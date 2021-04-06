@@ -22,7 +22,7 @@ public class APIController {
 
     @CrossOrigin
     @PostMapping("/api/users")
-    public ResponseEntity<UserModel> addUserModel(@RequestParam String firstName, @RequestParam String lastName , @RequestParam String emailAddress) {
+    public ResponseEntity<UserModel> addUser(@RequestParam String firstName, @RequestParam String lastName , @RequestParam String emailAddress) {
 
         System.out.println(firstName);
 
