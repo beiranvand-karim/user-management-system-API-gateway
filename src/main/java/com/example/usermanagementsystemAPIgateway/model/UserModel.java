@@ -18,6 +18,13 @@ public class UserModel {
         this.emailAddress = emailAddress;
     }
 
+    public UserModel(String firstName, String lastName, String emailAddress) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+    }
+
+
     public long getId() {
         return id;
     }

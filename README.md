@@ -11,11 +11,11 @@ ___
  
  To add a user :
  
- `curl -X POST -d 'firstName'='ali' -d 'lastName'='ahmadi' -d 'emailAddress'='hello@gmail.com' http://localhost:8082/api/users`
+ `curl  -H "Content-type":"application/json" -X POST -d '{"firstName":"ali","lastName":"ahmadi","emailAddress":"hello@gmail.com"}' http://localhost:8082/api/users`
  
  To get a user by id :
  
- `curl -X GET -G http://localhost:8082/api/user -d 'id'='1' `
+ `curl -X GET  http://localhost:8082/api/user/1`
  
  To delete a user by id:
  
