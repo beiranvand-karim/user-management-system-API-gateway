@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Arrays;
+
 @RestController
 public class APIController {
 
@@ -23,17 +25,12 @@ public class APIController {
 
         System.out.println(user.getFirstName());
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users")
-                .queryParam("firstName", user.getFirstName())
-                .queryParam("lastName",user.getLastName())
-                .queryParam("emailAddress",user.getEmailAddress());
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<UserModel> entity = new HttpEntity<UserModel>(user,headers);
 
         ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
-                builder.build().encode().toUri(),
-                HttpMethod.POST,
-                entity,
-                UserModel.class
-                );
+                "http://localhost:8081/users", HttpMethod.POST, entity, UserModel.class);
+
         return responseEntity;
     }
 
@@ -43,10 +40,7 @@ public class APIController {
 
         System.out.println(id);
 
-                UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/user")
-                .queryParam("id", id);
-
-
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/user/" + id);
 
         ResponseEntity<UserModel> userModel = restTemplate.exchange(
                 builder.build().encode().toUri(),
