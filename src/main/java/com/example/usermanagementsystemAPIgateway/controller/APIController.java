@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @RestController
 public class APIController {
@@ -17,7 +17,8 @@ public class APIController {
     private RestTemplate restTemplate;
 
     HttpHeaders headers = new HttpHeaders();
-    HttpEntity<?> entity = new HttpEntity<>(headers);
+
+    private String url = "http://localhost:8081/users/";
 
     @CrossOrigin
     @PostMapping(value = "/api/users")
@@ -25,61 +26,60 @@ public class APIController {
 
         System.out.println(user.getFirstName());
 
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(user,headers);
 
-        ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
-                "http://localhost:8081/users", HttpMethod.POST, entity, UserModel.class);
+        return restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                entity,
+                UserModel.class);
 
-        return responseEntity;
     }
 
     @CrossOrigin
-    @GetMapping("/api/user/{id}")
+    @GetMapping("/api/users/{id}")
     public ResponseEntity<UserModel> getUser(@PathVariable String id) {
 
         System.out.println(id);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/user/" + id);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
-        ResponseEntity<UserModel> userModel = restTemplate.exchange(
-                builder.build().encode().toUri(),
+        return restTemplate.exchange(
+                url + id,
                 HttpMethod.GET,
                 entity,
-                UserModel.class
-        );
-        return userModel;
+                UserModel.class);
+
     }
 
     @CrossOrigin
     @GetMapping("/api/users")
     public ResponseEntity<String> getUsers() {
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users");
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
-        ResponseEntity<String> userModel = restTemplate.exchange(
-                builder.build().encode().toUri(),
+        return restTemplate.exchange(
+                url,
                 HttpMethod.GET,
                 entity,
-                String.class
-        );
-        return userModel;
+                String.class);
     }
 
     @CrossOrigin
-    @DeleteMapping("/api/users")
-    public ResponseEntity<String> deleteUser(@RequestParam String id) {
+    @DeleteMapping("/api/users/{id}")
+    public ResponseEntity<UserModel> deleteUser(@PathVariable String id) {
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/users")
-                .queryParam("id",id);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
-        ResponseEntity<String> userModel = restTemplate.exchange(
-                builder.build().encode().toUri(),
+        return restTemplate.exchange(
+                url + id,
                 HttpMethod.DELETE,
                 entity,
-                String.class
-        );
-        return userModel;
+                UserModel.class);
     }
 
 }
