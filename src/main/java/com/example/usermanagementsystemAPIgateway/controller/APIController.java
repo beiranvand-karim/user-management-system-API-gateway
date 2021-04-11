@@ -3,11 +3,11 @@ package com.example.usermanagementsystemAPIgateway.controller;
 
 import com.example.usermanagementsystemAPIgateway.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @RestController
@@ -18,13 +18,12 @@ public class APIController {
 
     HttpHeaders headers = new HttpHeaders();
 
-    private String url = "http://localhost:8081/users/";
+    @Value("${user-management-system.url}")
+    private String url;
 
     @CrossOrigin
     @PostMapping(value = "/api/users")
     public ResponseEntity<UserModel> addUser(@RequestBody UserModel user) {
-
-        System.out.println(user.getFirstName());
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(user,headers);
@@ -39,9 +38,7 @@ public class APIController {
 
     @CrossOrigin
     @GetMapping("/api/users/{id}")
-    public ResponseEntity<UserModel> getUser(@PathVariable String id) {
-
-        System.out.println(id);
+    public ResponseEntity<UserModel> getUser(@PathVariable long id) {
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
@@ -58,7 +55,7 @@ public class APIController {
     @GetMapping("/api/users")
     public ResponseEntity<String> getUsers() {
 
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
         return restTemplate.exchange(
@@ -70,7 +67,7 @@ public class APIController {
 
     @CrossOrigin
     @DeleteMapping("/api/users/{id}")
-    public ResponseEntity<UserModel> deleteUser(@PathVariable String id) {
+    public ResponseEntity<UserModel> deleteUser(@PathVariable long id) {
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
