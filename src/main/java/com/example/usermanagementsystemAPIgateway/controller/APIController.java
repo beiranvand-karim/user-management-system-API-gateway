@@ -29,7 +29,7 @@ public class APIController {
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(user,headers);
 
         return restTemplate.exchange(
-                url,
+                url + "/users",
                 HttpMethod.POST,
                 entity,
                 UserModel.class);
@@ -44,7 +44,7 @@ public class APIController {
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
         return restTemplate.exchange(
-                url + id,
+                url + "/users/" + id,
                 HttpMethod.GET,
                 entity,
                 UserModel.class);
@@ -59,7 +59,7 @@ public class APIController {
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
         return restTemplate.exchange(
-                url,
+                url + "/users",
                 HttpMethod.GET,
                 entity,
                 String.class);
@@ -73,7 +73,7 @@ public class APIController {
         HttpEntity<UserModel> entity = new HttpEntity<UserModel>(headers);
 
         return restTemplate.exchange(
-                url + id,
+                url + "/users/" + id,
                 HttpMethod.DELETE,
                 entity,
                 UserModel.class);
