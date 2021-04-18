@@ -22,7 +22,7 @@ public class APIController {
     private String url;
 
     @CrossOrigin
-    @PostMapping(value = "/api/users")
+    @PostMapping(value = "/users")
     public ResponseEntity<UserModel> addUser(@RequestBody UserModel user) {
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -37,7 +37,7 @@ public class APIController {
     }
 
     @CrossOrigin
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserModel> getUser(@PathVariable long id) {
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -52,7 +52,7 @@ public class APIController {
     }
 
     @CrossOrigin
-    @GetMapping("/api/users")
+    @GetMapping("/users")
     public ResponseEntity<String> getUsers() {
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -66,7 +66,7 @@ public class APIController {
     }
 
     @CrossOrigin
-    @DeleteMapping("/api/users/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<UserModel> deleteUser(@PathVariable long id) {
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
